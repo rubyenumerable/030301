@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:panel id="panel" header="Notification">
+                <p:messages id="msgs" />
+
+                <h:panelGrid columns="3" cellpadding="1">
+                    <p:outputLabel for="employeeId" value="社員ID:" />
+                    <p:inputText id="employeeId" value="#{pushSendBean.employeeId}" maxlength="7" size="8" required="true">
+                        <f:validateLength minimum="7" />
+                    </p:inputText>
+                    <p:message for="employeeId" display="icon" />
+                    <p:outputLabel for="message" value="通知メッセージ:" />
+                    <p:inputTextarea id="message" value="#{pushSendBean.message}" rows="1" cols="20" counter="display" maxlength="35" counterTemplate="残り{0}文字" autoResize="true" required="true" />
+                    <h:outputText id="display" />
+                </h:panelGrid>
+
+                <p:commandButton value="通知" update="push-list" actionListener="#{pushSendBean.save}" icon="ui-icon-check" />
+            </p:panel>
+            <p:fragment id="push-list" autoUpdate="true">
+                <p:panel>
+                    <p:dataTable var="pushSend" value="#{pushSendBean.pushSendList}">
+                        <p:column headerText="No">
+                            <h:outputText value="#{pushSend.id}" />
+                        </p:column>
+                        <p:column headerText="社員ID">
+                            <h:outputText value="#{pushSend.employeeId}" />
+                        </p:column>
+                        <p:column headerText="通知メッセージ">
+                            <h:outputText value="#{pushSend.message}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+            </p:fragment>
+        </h:form>
+    </h:body>
+</html>
+
